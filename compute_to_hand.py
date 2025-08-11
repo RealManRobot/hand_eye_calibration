@@ -1,5 +1,93 @@
 # coding=utf-8
 
+import numpy as np
+
+def compute_target_in_hand_frame(base_to_hand_pose, camera_to_target_pose, eye_on_hand_calib_matrix):
+    """
+    计算目标物体在机械手坐标系中的位姿。
+
+    此函数适用于“眼在手上”(eye-on-hand)的场景，即相机安装在机器人末端执行器上。
+    它利用机器人基座到手部的位姿、相机到目标的位姿以及手眼标定矩阵，
+    计算出目标相对于手部的最终位姿。
+
+    数学公式: T_hand_target = T_hand_camera * T_camera_target
+    其中 T_hand_camera 是手眼标定矩阵。
+
+    Args:
+        base_to_hand_pose (np.ndarray): 机器人基座到末端执行器（手）的4x4位姿变换矩阵。
+                                        通常由机器人控制器提供。
+        camera_to_target_pose (np.ndarray): 相机坐标系到目标物体的4x4位姿变换矩阵。
+                                            通常由视觉系统（相机）检测得出。
+        eye_on_hand_calib_matrix (np.ndarray): 手（末端执行器）到相机的4x4位姿变换矩阵。
+                                               这是通过手眼标定过程计算得出的“手眼矩阵”。
+
+    Returns:
+        np.ndarray: 目标物体在机械手坐标系中的4x4位姿变换矩阵。
+    """
+    # 验证输入是否为4x4的numpy数组
+    assert base_to_hand_pose.shape == (4, 4), "base_to_hand_pose 必须是 4x4 矩阵"
+    assert camera_to_target_pose.shape == (4, 4), "camera_to_target_pose 必须是 4x4 矩阵"
+    assert eye_on_hand_calib_matrix.shape == (4, 4), "eye_on_hand_calib_matrix 必须是 4x4 矩阵"
+
+    # T_hand_target = T_hand_camera * T_camera_target
+    # T_hand_camera 就是手眼标定矩阵 eye_on_hand_calib_matrix
+    target_in_hand_frame = np.dot(eye_on_hand_calib_matrix, camera_to_target_pose)
+
+    return target_in_hand_frame
+
+# --- 主程序入口 ---
+if __name__ == '__main__':
+    # 这是一个示例，展示如何使用上述函数。
+    # 在实际应用中，这些矩阵将从机器人和相机实时获取。
+
+    print("--- 手眼标定计算示例 ---")
+
+    # 1. 定义机器人基座到手部的位姿矩阵 (T_base_hand)
+    #    假设手部相对于基座平移了 (x=0.5, y=0.2, z=0.4) 米，并且绕Z轴旋转了90度。
+    base_to_hand_pose = np.array([
+        [0, -1, 0, 0.5],
+        [1,  0, 0, 0.2],
+        [0,  0, 1, 0.4],
+        [0,  0, 0, 1.0]
+    ])
+    print("\n机器人基座 -> 手部 的位姿 (T_base_hand):\n", base_to_hand_pose)
+
+    # 2. 定义手到相机的标定矩阵 (T_hand_camera)
+    #    这是通过手眼标定得到的关键结果。
+    #    假设相机相对于手部平移了 (x=0.1, y=0, z=0.05) 米，并且绕Y轴旋转了-90度。
+    eye_on_hand_calib_matrix = np.array([
+        [ 0, 0, 1, 0.1],
+        [ 0, 1, 0, 0.0],
+        [-1, 0, 0, 0.05],
+        [ 0, 0, 0, 1.0]
+    ])
+    print("\n手 -> 相机 的标定矩阵 (T_hand_camera):\n", eye_on_hand_calib_matrix)
+
+    # 3. 定义相机检测到的目标位姿 (T_camera_target)
+    #    假设相机检测到目标在其前方0.3米处。
+    camera_to_target_pose = np.array([
+        [1, 0, 0, 0.0],
+        [0, 1, 0, 0.0],
+        [0, 0, 1, 0.3],
+        [0, 0, 0, 1.0]
+    ])
+    print("\n相机 -> 目标 的位姿 (T_camera_target):\n", camera_to_target_pose)
+
+    # 4. 调用函数计算目标在手部坐标系中的位姿
+    target_in_hand_pose = compute_target_in_hand_frame(
+        base_to_hand_pose,
+        camera_to_target_pose,
+        eye_on_hand_calib_matrix
+    )
+
+    # 5. 打印最终结果
+    print("\n计算结果：目标 -> 手部 的位姿 (T_hand_target):\n", target_in_hand_pose)
+
+    # 从结果矩阵中提取平移向量 (x, y, z)
+    translation = target_in_hand_pose[:3, 3]
+    print(f"\n目标在手部坐标系下的位置 (x, y, z): ({translation[0]:.3f}, {translation[1]:.3f}, {translation[2]:.3f})")
+
+
 """
 眼在手外 用采集到的图片信息和机械臂位姿信息计算 相机坐标系相对于机械臂基坐标系的 旋转矩阵和平移向量
 

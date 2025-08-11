@@ -3,3 +3,4 @@ opencv-python==4.10.0.84
 pyrealsense2==2.55.1.6486
 scipy==1.13.1
 PyYAML==6.0.2
+requests==2.32.4

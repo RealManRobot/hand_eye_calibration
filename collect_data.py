@@ -1,8 +1,9 @@
 # coding=utf-8
 import json
 import logging,os
-import socket
+
 import time
+import requests
 import sys
 import numpy as np
 import cv2
@@ -29,8 +30,7 @@ def callback(frame):
 
     if k == ord('s'):  # 若检测到按键 ‘s’，打印字符串
 
-        socket_command = '{"command": "get_current_arm_state"}'
-        state,pose = send_cmd(client,socket_command)
+        state,pose = send_cmd()
         logger_.info(f'获取状态：{"成功" if state else "失败"}，{f"当前位姿为{pose}" if state else None}')
         if state:
 
@@ -53,82 +53,42 @@ def callback(frame):
         pass
 
 
-def send_cmd(client, cmd, get_pose=True):
+def send_cmd(get_pose=True):
     """
-    发送命令到机械臂并可选择性地获取姿态(pose)数据
+    通过HTTP GET请求从机械臂获取姿态(pose)数据。
 
     参数:
-    client: socket客户端连接
-    cmd: 要发送的命令字符串或JSON字符串
-    get_pose: 是否需要获取pose数据
+    get_pose: 如果为True，则获取姿态数据。目前只支持True。
 
     返回:
-    如果get_pose为True，返回tuple (状态, pose或错误信息)
-    如果get_pose为False，返回布尔值表示命令是否成功发送
+    如果get_pose为True, 返回一个元组 (状态, pose数据或错误信息)。
+    状态为True表示成功, False表示失败。
+    pose数据是一个包含xyzrpy坐标的列表。
     """
-    client.send(cmd.encode('utf-8'))
-
     if not get_pose:
-        response = client.recv(1024).decode('utf-8')
-        logger_.info(f"response:{response}")
-        return True
+        logger_.warning("send_cmd called with get_pose=False, which is not supported in HTTP mode.")
+        return (False, "Operation not supported")
 
-    time.sleep(0.1)
-    response = client.recv(4096).decode('utf-8')  # 增大接收缓冲区
-    logger_.info(f'response:{response}')
-
+    url = "http://192.168.110.91:8080"
     try:
-        decoder = json.JSONDecoder()
-        data_list = []
-        index = 0
-        # 分割并解析所有可能的JSON对象
-        while index < len(response):
-            try:
-                # 跳过空白字符
-                while index < len(response) and response[index].isspace():
-                    index += 1
-                if index >= len(response):
-                    break
-                obj, idx = decoder.raw_decode(response[index:])
-                data_list.append(obj)
-                index += idx
-            except json.JSONDecodeError as e:
-                logger_.error(f"JSON解析错误：{str(e)}")
-                break
+        response = requests.get(url, timeout=5)  # 设置5秒超时
+        response.raise_for_status()  # 如果状态码不是2xx，则引发HTTPError
 
-        # 寻找最后一个包含目标状态的响应
-        target_data = None
-        for data in reversed(data_list):
-            if data.get("state") == "current_arm_state":
-                target_data = data
-                break
+        pose_data = response.json()
+        logger_.info(f'Received pose data: {pose_data}')
 
-        if not target_data:
-            return False, "未找到有效的机械臂状态响应"
+        if isinstance(pose_data, list) and len(pose_data) == 6:
+            return (True, pose_data)
+        else:
+            logger_.error(f"Invalid pose data format: {pose_data}")
+            return (False, f"Invalid pose data format: {pose_data}")
 
-        # 检查错误码
-        if target_data["arm_state"]["err"] != [0]:
-            return False, f"机械臂报错: {target_data['arm_state']['err']}"
-
-        # 转换单位
-        pose_raw = target_data["arm_state"]["pose"]
-        pose_converted = [
-            pose_raw[0] / 1000000,  # x: 0.001mm → m
-            pose_raw[1] / 1000000,  # y: 0.001mm → m
-            pose_raw[2] / 1000000,  # z: 0.001mm → m
-            pose_raw[3] / 1000,    # rx: 0.001rad → rad
-            pose_raw[4] / 1000,    # ry: 0.001rad → rad
-            pose_raw[5] / 1000     # rz: 0.001rad → rad
-        ]
-
-        return True, pose_converted
-
-    except json.JSONDecodeError:
-        return False, "JSON解析错误"
-    except KeyError as e:
-        return False, f"响应缺少关键字段: {str(e)}"
-    except Exception as e:
-        return False, f"处理响应时发生错误: {str(e)}"
+    except requests.exceptions.RequestException as e:
+        logger_.error(f"HTTP request failed: {e}")
+        return (False, f"HTTP request failed: {e}")
+    except json.JSONDecodeError as e:
+        logger_.error(f"Failed to decode JSON response: {e}")
+        return (False, f"Failed to decode JSON response: {e}")
 #
 def displayD435():
 
@@ -166,23 +126,5 @@ def displayD435():
 
 
 if __name__ == '__main__':
-
-    robot_ip = get_ip()
-
-
-
-    logger_.info(f'robot_ip:{robot_ip}')
-
-    if robot_ip:
-
-        client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        client.connect((robot_ip, 8080))
-        socket_command = '{"command":"set_change_work_frame","frame_name":"Base"}'
-        send_cmd(client,socket_command,get_pose = False)
-
-    else:
-
-        popup_message("提醒", "机械臂ip没有ping通")
-        sys.exit(1)
 
     displayD435()
