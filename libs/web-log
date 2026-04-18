@@ -1,0 +1,367 @@
+2026-04-16 18:26:13 - libs.auxiliary - INFO: create folder eye_hand_data/data20260416
+2026-04-16 18:26:13 - libs.auxiliary - INFO: command:['ping', '-c', '1', '192.168.1.18']
+2026-04-16 18:26:16 - libs.auxiliary - INFO: command:['ping', '-c', '1', '192.168.10.18']
+2026-04-16 18:26:55 - libs.auxiliary - INFO: create folder eye_hand_data/data2026041601
+2026-04-16 18:26:55 - libs.auxiliary - INFO: command:['ping', '-c', '1', '192.168.0.19']
+2026-04-16 18:26:55 - __main__ - INFO: robot_ip:192.168.0.19
+2026-04-16 18:26:55 - __main__ - INFO: response:{"change_work_frame":true,"command":"set_change_work_frame"}
+
+2026-04-16 18:26:55 - __main__ - INFO: 开始手眼标定程序，当前程序版号V1.0.0
+2026-04-16 18:27:20 - __main__ - INFO: response:{"arm_state":{"err":[0],"joint":[679,-99244,89313,88293,36948,93192,66218],"pose":[-115794,276973,86773,-2007,482,-15]},"state":"current_arm_state"}
+
+2026-04-16 18:27:20 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.115794, 0.276973, 0.086773, -2.007, 0.482, -0.015]
+2026-04-16 18:27:20 - __main__ - INFO: ===采集第1次数据！
+2026-04-16 18:28:48 - libs.auxiliary - INFO: create folder eye_hand_data/data2026041602
+2026-04-16 18:28:48 - libs.auxiliary - INFO: command:['ping', '-c', '1', '192.168.0.19']
+2026-04-16 18:28:48 - __main__ - INFO: robot_ip:192.168.0.19
+2026-04-16 18:28:48 - __main__ - INFO: response:{"change_work_frame":true,"command":"set_change_work_frame"}
+
+2026-04-16 18:28:48 - __main__ - INFO: 开始手眼标定程序，当前程序版号V1.0.0
+2026-04-16 18:29:07 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"command":"start_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[7712,-71784,93580,92965,15522,98031,66231],"pose":[-127383,227198,169744,-2166,565,-110]},"state":"current_arm_state"}
+
+2026-04-16 18:29:07 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.127383, 0.227198, 0.169744, -2.166, 0.565, -0.11]
+2026-04-16 18:29:07 - __main__ - INFO: ===采集第1次数据！
+2026-04-16 18:29:23 - __main__ - INFO: response:{"command":"stop_drag_teach","drag_teach":true}
+{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[1203,-81860,72735,92973,15510,97590,66225],"pose":[-74420,260783,246288,-1726,453,-84]},"state":"current_arm_state"}
+
+2026-04-16 18:29:23 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.07442, 0.260783, 0.246288, -1.726, 0.453, -0.084]
+2026-04-16 18:29:23 - __main__ - INFO: ===采集第2次数据！
+2026-04-16 18:29:31 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[4286,-75758,62560,92686,11478,99251,66152],"pose":[-67980,244552,305486,-1560,519,-31]},"state":"current_arm_state"}
+
+2026-04-16 18:29:31 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.06798, 0.244552, 0.305486, -1.56, 0.519, -0.031]
+2026-04-16 18:29:31 - __main__ - INFO: ===采集第3次数据！
+2026-04-16 18:29:51 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[21836,-65548,74919,104566,20935,92643,65964],"pose":[-130122,209334,222280,-1853,846,111]},"state":"current_arm_state"}
+
+2026-04-16 18:29:51 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.130122, 0.209334, 0.22228, -1.853, 0.846, 0.111]
+2026-04-16 18:29:51 - __main__ - INFO: ===采集第4次数据！
+2026-04-16 18:29:58 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[40649,-75907,75057,98142,13809,113653,65970],"pose":[-164355,110131,222742,-1993,565,148]},"state":"current_arm_state"}
+
+2026-04-16 18:29:58 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.164355, 0.110131, 0.222742, -1.993, 0.565, 0.148]
+2026-04-16 18:29:58 - __main__ - INFO: ===采集第5次数据！
+2026-04-16 18:30:11 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[42833,-65611,53883,98392,-17716,115335,65935],"pose":[-66279,100662,365179,-1627,431,17]},"state":"current_arm_state"}
+
+2026-04-16 18:30:11 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.066279, 0.100662, 0.365179, -1.627, 0.431, 0.017]
+2026-04-16 18:30:11 - __main__ - INFO: ===采集第6次数据！
+2026-04-16 18:30:21 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[25366,-90177,123987,83817,-449,113733,65876],"pose":[-147130,116309,89305,-2560,-178,190]},"state":"current_arm_state"}
+
+2026-04-16 18:30:21 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.14713, 0.116309, 0.089305, -2.56, -0.178, 0.19]
+2026-04-16 18:30:21 - __main__ - INFO: ===采集第7次数据！
+2026-04-16 18:30:27 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[8392,-96659,123975,83813,-462,113266,65858],"pose":[-89596,158108,80046,-2532,-283,-105]},"state":"current_arm_state"}
+
+2026-04-16 18:30:27 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.089596, 0.158108, 0.080046, -2.532, -0.283, -0.105]
+2026-04-16 18:30:27 - __main__ - INFO: ===采集第8次数据！
+2026-04-16 18:30:34 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[-4413,-92875,108833,81900,-564,105147,65868],"pose":[-72416,240697,123312,-2310,-98,-190]},"state":"current_arm_state"}
+
+2026-04-16 18:30:34 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.072416, 0.240697, 0.123312, -2.31, -0.098, -0.19]
+2026-04-16 18:30:34 - __main__ - INFO: ===采集第9次数据！
+2026-04-16 18:30:44 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[-3431,-72299,88619,74650,-516,94104,65842],"pose":[-129166,318472,262961,-1906,288,144]},"state":"current_arm_state"}
+
+2026-04-16 18:30:44 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.129166, 0.318472, 0.262961, -1.906, 0.288, 0.144]
+2026-04-16 18:30:44 - __main__ - INFO: ===采集第10次数据！
+2026-04-16 18:30:57 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[46944,-59456,81547,77198,4294,116069,65721],"pose":[-244282,87066,286794,-2020,618,549]},"state":"current_arm_state"}
+
+2026-04-16 18:30:57 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.244282, 0.087066, 0.286794, -2.02, 0.618, 0.549]
+2026-04-16 18:30:57 - __main__ - INFO: ===采集第11次数据！
+2026-04-16 18:31:08 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[33947,-64164,97722,78119,22299,125424,65725],"pose":[-243231,51979,182260,-2609,642,-4]},"state":"current_arm_state"}
+
+2026-04-16 18:31:08 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.243231, 0.051979, 0.18226, -2.609, 0.642, -0.004]
+2026-04-16 18:31:08 - __main__ - INFO: ===采集第12次数据！
+2026-04-16 18:31:21 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[-13043,-93232,100101,81779,12118,104271,65717],"pose":[-45015,259719,117306,-2217,126,-371]},"state":"current_arm_state"}
+
+2026-04-16 18:31:21 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.045015, 0.259719, 0.117306, -2.217, 0.126, -0.371]
+2026-04-16 18:31:21 - __main__ - INFO: ===采集第13次数据！
+2026-04-16 18:31:27 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[1260,-86412,113365,84412,372,113045,65703],"pose":[-93510,190225,125574,-2405,-53,-259]},"state":"current_arm_state"}
+
+2026-04-16 18:31:27 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.09351, 0.190225, 0.125574, -2.405, -0.053, -0.259]
+2026-04-16 18:31:27 - __main__ - INFO: ===采集第14次数据！
+2026-04-16 18:31:35 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[-20518,-89452,103524,84587,370,85363,65724],"pose":[-577,316101,135410,-2225,56,-188]},"state":"current_arm_state"}
+
+2026-04-16 18:31:35 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.000577, 0.316101, 0.13541, -2.225, 0.056, -0.188]
+2026-04-16 18:31:35 - __main__ - INFO: ===采集第15次数据！
+2026-04-16 18:31:47 - __main__ - INFO: response:{"command":"stop_drag_teach","drag_teach":true}
+{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[-11550,-91801,112987,87573,14581,95685,65713],"pose":[-42785,232532,58739,-2425,178,-355]},"state":"current_arm_state"}
+
+2026-04-16 18:31:47 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.042785, 0.232532, 0.058739, -2.425, 0.178, -0.355]
+2026-04-16 18:31:47 - __main__ - INFO: ===采集第16次数据！
+2026-04-16 18:31:57 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[-1148,-94864,106301,84403,-8583,98513,65700],"pose":[-76634,262309,152624,-2259,-241,-28]},"state":"current_arm_state"}
+
+2026-04-16 18:31:57 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.076634, 0.262309, 0.152624, -2.259, -0.241, -0.028]
+2026-04-16 18:31:57 - __main__ - INFO: ===采集第17次数据！
+2026-04-16 18:33:12 - __main__ - INFO: 读 eye_hand_data/data2026041602/1.jpg
+2026-04-16 18:33:12 - __main__ - INFO: 读 eye_hand_data/data2026041602/2.jpg
+2026-04-16 18:33:12 - __main__ - INFO: 读 eye_hand_data/data2026041602/3.jpg
+2026-04-16 18:33:12 - __main__ - INFO: 读 eye_hand_data/data2026041602/4.jpg
+2026-04-16 18:33:12 - __main__ - INFO: 读 eye_hand_data/data2026041602/5.jpg
+2026-04-16 18:33:12 - __main__ - INFO: 读 eye_hand_data/data2026041602/6.jpg
+2026-04-16 18:33:12 - __main__ - INFO: 读 eye_hand_data/data2026041602/7.jpg
+2026-04-16 18:33:12 - __main__ - INFO: 读 eye_hand_data/data2026041602/8.jpg
+2026-04-16 18:33:12 - __main__ - INFO: 读 eye_hand_data/data2026041602/9.jpg
+2026-04-16 18:33:12 - __main__ - INFO: 读 eye_hand_data/data2026041602/10.jpg
+2026-04-16 18:33:12 - __main__ - INFO: 读 eye_hand_data/data2026041602/11.jpg
+2026-04-16 18:33:13 - __main__ - INFO: 读 eye_hand_data/data2026041602/12.jpg
+2026-04-16 18:33:13 - __main__ - INFO: 读 eye_hand_data/data2026041602/13.jpg
+2026-04-16 18:33:13 - __main__ - INFO: 读 eye_hand_data/data2026041602/14.jpg
+2026-04-16 18:33:13 - __main__ - INFO: 读 eye_hand_data/data2026041602/15.jpg
+2026-04-16 18:33:13 - __main__ - INFO: 读 eye_hand_data/data2026041602/16.jpg
+2026-04-16 18:33:13 - __main__ - INFO: 读 eye_hand_data/data2026041602/17.jpg
+2026-04-16 18:33:13 - __main__ - INFO: 旋转矩阵是:
+ [[ 0.59626355  0.5579145   0.57723582]
+ [-0.67814263  0.73486535 -0.00977123]
+ [-0.42964212 -0.38562199  0.81651903]]
+2026-04-16 18:33:13 - __main__ - INFO: 平移向量是:
+ [[-0.00807884]
+ [-0.18450848]
+ [-0.14388549]]
+2026-04-16 18:33:13 - __main__ - INFO: 四元数是：
+ [-0.10592351  0.28376168 -0.34834973  0.8870806 ]
+2026-04-16 18:42:04 - libs.auxiliary - INFO: create folder eye_hand_data/data20260416
+2026-04-16 18:42:04 - libs.auxiliary - INFO: command:['ping', '-c', '1', '192.168.0.18']
+2026-04-16 18:42:04 - __main__ - INFO: robot_ip:192.168.0.18
+2026-04-16 18:42:04 - __main__ - INFO: response:{"change_work_frame":true,"command":"set_change_work_frame"}
+
+2026-04-16 18:42:04 - __main__ - INFO: 开始手眼标定程序，当前程序版号V1.0.0
+2026-04-16 18:44:10 - libs.auxiliary - INFO: create folder eye_hand_data/data2026041601
+2026-04-16 18:44:10 - libs.auxiliary - INFO: command:['ping', '-c', '1', '192.168.0.18']
+2026-04-16 18:44:10 - __main__ - INFO: robot_ip:192.168.0.18
+2026-04-16 18:44:10 - __main__ - INFO: response:{"change_work_frame":true,"command":"set_change_work_frame"}
+
+2026-04-16 18:44:11 - __main__ - INFO: 开始手眼标定程序，当前程序版号V1.0.0
+2026-04-16 18:46:38 - libs.auxiliary - INFO: create folder eye_hand_data/data2026041603
+2026-04-16 18:46:38 - libs.auxiliary - INFO: command:['ping', '-c', '1', '192.168.0.18']
+2026-04-16 18:46:38 - __main__ - INFO: robot_ip:192.168.0.18
+2026-04-16 18:46:38 - __main__ - INFO: response:{"change_work_frame":true,"command":"set_change_work_frame"}
+
+2026-04-16 18:46:39 - __main__ - INFO: 开始手眼标定程序，当前程序版号V1.0.0
+2026-04-16 18:46:54 - __main__ - INFO: response:{"arm_state":{"err":[0],"joint":[17212,52336,29219,86539,18152,90808,87208],"pose":[152449,254387,120651,2379,511,3099]},"state":"current_arm_state"}
+
+2026-04-16 18:46:54 - __main__ - INFO: 获取状态：成功，当前位姿为[0.152449, 0.254387, 0.120651, 2.379, 0.511, 3.099]
+2026-04-16 18:46:54 - __main__ - INFO: ===采集第1次数据！
+2026-04-16 18:47:05 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[-7160,51454,28817,92502,955,98539,87220],"pose":[192967,105162,102940,2638,493,3105]},"state":"current_arm_state"}
+
+2026-04-16 18:47:05 - __main__ - INFO: 获取状态：成功，当前位姿为[0.192967, 0.105162, 0.10294, 2.638, 0.493, 3.105]
+2026-04-16 18:47:05 - __main__ - INFO: ===采集第2次数据！
+2026-04-16 18:47:22 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[-4683,51644,30786,107100,-8117,92433,87230],"pose":[127604,81234,84955,2708,425,-2898]},"state":"current_arm_state"}
+
+2026-04-16 18:47:22 - __main__ - INFO: 获取状态：成功，当前位姿为[0.127604, 0.081234, 0.084955, 2.708, 0.425, -2.898]
+2026-04-16 18:47:22 - __main__ - INFO: ===采集第3次数据！
+2026-04-16 18:47:39 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[-4762,47782,34700,92466,-9298,114507,87195],"pose":[165500,76631,141929,2749,386,-2803]},"state":"current_arm_state"}
+
+2026-04-16 18:47:39 - __main__ - INFO: 获取状态：成功，当前位姿为[0.1655, 0.076631, 0.141929, 2.749, 0.386, -2.803]
+2026-04-16 18:47:39 - __main__ - INFO: ===采集第4次数据！
+2026-04-16 18:47:50 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[9022,49055,39291,94748,7543,111634,87198],"pose":[96747,167333,165735,2481,267,-2789]},"state":"current_arm_state"}
+
+2026-04-16 18:47:50 - __main__ - INFO: 获取状态：成功，当前位姿为[0.096747, 0.167333, 0.165735, 2.481, 0.267, -2.789]
+2026-04-16 18:47:50 - __main__ - INFO: ===采集第5次数据！
+2026-04-16 18:48:08 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[8676,49772,54698,91531,16233,111622,87188],"pose":[62574,219429,223233,2168,237,-2814]},"state":"current_arm_state"}
+
+2026-04-16 18:48:08 - __main__ - INFO: 获取状态：成功，当前位姿为[0.062574, 0.219429, 0.223233, 2.168, 0.237, -2.814]
+2026-04-16 18:48:08 - __main__ - INFO: ===采集第6次数据！
+2026-04-16 18:48:23 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[8651,49758,56134,76669,18980,108694,87195],"pose":[116108,277809,253962,1973,379,-3081]},"state":"current_arm_state"}
+
+2026-04-16 18:48:23 - __main__ - INFO: 获取状态：成功，当前位姿为[0.116108, 0.277809, 0.253962, 1.973, 0.379, -3.081]
+2026-04-16 18:48:23 - __main__ - INFO: ===采集第7次数据！
+2026-04-16 18:48:47 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[8289,49974,56852,69936,18676,109732,87199],"pose":[141282,289591,270397,1895,428,3114]},"state":"current_arm_state"}
+
+2026-04-16 18:48:47 - __main__ - INFO: 获取状态：成功，当前位姿为[0.141282, 0.289591, 0.270397, 1.895, 0.428, 3.114]
+2026-04-16 18:48:47 - __main__ - INFO: ===采集第8次数据！
+2026-04-16 18:49:00 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[-17792,50715,50667,68578,9582,110309,87198],"pose":[276859,161170,225233,2071,569,2699]},"state":"current_arm_state"}
+
+2026-04-16 18:49:00 - __main__ - INFO: 获取状态：成功，当前位姿为[0.276859, 0.16117, 0.225233, 2.071, 0.569, 2.699]
+2026-04-16 18:49:00 - __main__ - INFO: ===采集第9次数据！
+2026-04-16 18:49:17 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[20816,85484,43214,77467,-3057,97761,87195],"pose":[64077,239026,28565,2345,175,-2796]},"state":"current_arm_state"}
+
+2026-04-16 18:49:17 - __main__ - INFO: 获取状态：成功，当前位姿为[0.064077, 0.239026, 0.028565, 2.345, 0.175, -2.796]
+2026-04-16 18:49:17 - __main__ - INFO: ===采集第10次数据！
+2026-04-16 18:49:32 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[32474,91448,43268,71942,-2954,90573,87197],"pose":[20695,276798,-8034,2327,231,-2748]},"state":"current_arm_state"}
+
+2026-04-16 18:49:32 - __main__ - INFO: 获取状态：成功，当前位姿为[0.020695, 0.276798, -0.008034, 2.327, 0.231, -2.748]
+2026-04-16 18:49:32 - __main__ - INFO: ===采集第11次数据！
+2026-04-16 18:49:46 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[19327,84447,29137,73988,-1488,99634,87199],"pose":[109836,193038,-8241,2584,206,-2836]},"state":"current_arm_state"}
+
+2026-04-16 18:49:46 - __main__ - INFO: 获取状态：成功，当前位姿为[0.109836, 0.193038, -0.008241, 2.584, 0.206, -2.836]
+2026-04-16 18:49:46 - __main__ - INFO: ===采集第12次数据！
+2026-04-16 18:50:28 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[43563,72523,26249,84397,26724,85087,87202],"pose":[-1196,294345,42312,2494,223,-2893]},"state":"current_arm_state"}
+
+2026-04-16 18:50:28 - __main__ - INFO: 获取状态：成功，当前位姿为[-0.001196, 0.294345, 0.042312, 2.494, 0.223, -2.893]
+2026-04-16 18:50:28 - __main__ - INFO: ===采集第13次数据！
+2026-04-16 18:50:52 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[26873,46476,22189,106329,22771,88431,87205],"pose":[57417,205062,112514,2609,359,-2965]},"state":"current_arm_state"}
+
+2026-04-16 18:50:52 - __main__ - INFO: 获取状态：成功，当前位姿为[0.057417, 0.205062, 0.112514, 2.609, 0.359, -2.965]
+2026-04-16 18:50:52 - __main__ - INFO: ===采集第14次数据！
+2026-04-16 18:51:21 - __main__ - INFO: response:{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"command":"start_drag_teach","drag_teach":true}
+{"command":"stop_drag_teach","drag_teach":true}
+{"arm_state":{"err":[0],"joint":[33053,68340,22232,76622,22576,92007,87203],"pose":[102000,290409,54076,2478,361,-3033]},"state":"current_arm_state"}
+
+2026-04-16 18:51:21 - __main__ - INFO: 获取状态：成功，当前位姿为[0.102, 0.290409, 0.054076, 2.478, 0.361, -3.033]
+2026-04-16 18:51:21 - __main__ - INFO: ===采集第15次数据！
+2026-04-16 18:51:38 - __main__ - INFO: 读 eye_hand_data/data2026041603/1.jpg
+2026-04-16 18:51:38 - __main__ - INFO: 读 eye_hand_data/data2026041603/2.jpg
+2026-04-16 18:51:38 - __main__ - INFO: 读 eye_hand_data/data2026041603/3.jpg
+2026-04-16 18:51:38 - __main__ - INFO: 读 eye_hand_data/data2026041603/4.jpg
+2026-04-16 18:51:38 - __main__ - INFO: 读 eye_hand_data/data2026041603/5.jpg
+2026-04-16 18:51:39 - __main__ - INFO: 读 eye_hand_data/data2026041603/6.jpg
+2026-04-16 18:51:39 - __main__ - INFO: 读 eye_hand_data/data2026041603/7.jpg
+2026-04-16 18:51:39 - __main__ - INFO: 读 eye_hand_data/data2026041603/8.jpg
+2026-04-16 18:51:39 - __main__ - INFO: 读 eye_hand_data/data2026041603/9.jpg
+2026-04-16 18:51:39 - __main__ - INFO: 读 eye_hand_data/data2026041603/10.jpg
+2026-04-16 18:51:39 - __main__ - INFO: 读 eye_hand_data/data2026041603/11.jpg
+2026-04-16 18:51:39 - __main__ - INFO: 读 eye_hand_data/data2026041603/12.jpg
+2026-04-16 18:51:39 - __main__ - INFO: 读 eye_hand_data/data2026041603/13.jpg
+2026-04-16 18:51:39 - __main__ - INFO: 读 eye_hand_data/data2026041603/14.jpg
+2026-04-16 18:51:39 - __main__ - INFO: 读 eye_hand_data/data2026041603/15.jpg
+2026-04-16 18:51:39 - __main__ - INFO: 旋转矩阵是:
+ [[-0.0131273   0.5548084   0.83187458]
+ [-0.99981054 -0.01924069 -0.00294505]
+ [ 0.0143719  -0.83175564  0.55495586]]
+2026-04-16 18:51:39 - __main__ - INFO: 平移向量是:
+ [[-0.1126387 ]
+ [ 0.00756604]
+ [-0.01048274]]
+2026-04-16 18:51:39 - __main__ - INFO: 四元数是：
+ [ 0.3358413  -0.33125924  0.62994521 -0.61696594]
+2026-04-16 19:31:18 - __main__ - INFO: 读 eye_hand_data/data2026041603/1.jpg
+2026-04-16 19:31:18 - __main__ - INFO: 读 eye_hand_data/data2026041603/2.jpg
+2026-04-16 19:31:18 - __main__ - WARNING: 未检测到棋盘格，跳过 eye_hand_data/data2026041603/2.jpg 及 poses.txt 第 2 行
+2026-04-16 19:31:18 - __main__ - INFO: 读 eye_hand_data/data2026041603/3.jpg
+2026-04-16 19:31:18 - __main__ - INFO: 读 eye_hand_data/data2026041603/4.jpg
+2026-04-16 19:31:18 - __main__ - INFO: 读 eye_hand_data/data2026041603/5.jpg
+2026-04-16 19:31:18 - __main__ - INFO: 读 eye_hand_data/data2026041603/6.jpg
+2026-04-16 19:31:18 - __main__ - INFO: 读 eye_hand_data/data2026041603/7.jpg
+2026-04-16 19:31:19 - __main__ - WARNING: 未检测到棋盘格，跳过 eye_hand_data/data2026041603/7.jpg 及 poses.txt 第 7 行
+2026-04-16 19:31:19 - __main__ - INFO: 读 eye_hand_data/data2026041603/8.jpg
+2026-04-16 19:31:20 - __main__ - WARNING: 未检测到棋盘格，跳过 eye_hand_data/data2026041603/8.jpg 及 poses.txt 第 8 行
+2026-04-16 19:31:20 - __main__ - INFO: 读 eye_hand_data/data2026041603/9.jpg
+2026-04-16 19:31:20 - __main__ - WARNING: 未检测到棋盘格，跳过 eye_hand_data/data2026041603/9.jpg 及 poses.txt 第 9 行
+2026-04-16 19:31:20 - __main__ - INFO: 读 eye_hand_data/data2026041603/10.jpg
+2026-04-16 19:31:20 - __main__ - INFO: 读 eye_hand_data/data2026041603/11.jpg
+2026-04-16 19:31:20 - __main__ - INFO: 读 eye_hand_data/data2026041603/12.jpg
+2026-04-16 19:31:20 - __main__ - INFO: 读 eye_hand_data/data2026041603/13.jpg
+2026-04-16 19:31:20 - __main__ - INFO: 读 eye_hand_data/data2026041603/14.jpg
+2026-04-16 19:31:20 - __main__ - INFO: 读 eye_hand_data/data2026041603/15.jpg
+2026-04-16 19:31:20 - __main__ - INFO: 棋盘格检测成功图片编号: [1, 3, 4, 5, 6, 10, 11, 12, 13, 14, 15]
+2026-04-16 19:31:20 - __main__ - INFO: 旋转矩阵是:
+ [[-0.01200839  0.5512117   0.834279  ]
+ [-0.9998512  -0.01695256 -0.00319097]
+ [ 0.01238427 -0.83419318  0.55133326]]
+2026-04-16 19:31:20 - __main__ - INFO: 平移向量是:
+ [[-0.11359732]
+ [ 0.00679456]
+ [-0.00980677]]
+2026-04-16 19:31:20 - __main__ - INFO: 四元数是：
+ [ 0.33675321 -0.33306252  0.62854877 -0.61692226]
+2026-04-16 19:31:35 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/1.jpg
+2026-04-16 19:31:35 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/2.jpg
+2026-04-16 19:31:35 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/3.jpg
+2026-04-16 19:31:35 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/4.jpg
+2026-04-16 19:31:35 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/5.jpg
+2026-04-16 19:31:35 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/6.jpg
+2026-04-16 19:31:35 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/7.jpg
+2026-04-16 19:31:35 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/8.jpg
+2026-04-16 19:31:35 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/9.jpg
+2026-04-16 19:31:35 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/10.jpg
+2026-04-16 19:31:35 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/11.jpg
+2026-04-16 19:31:36 - compute_in_hand - WARNING: 未检测到棋盘格，跳过 eye_hand_data/data2026041602/11.jpg 及 poses.txt 第 11 行
+2026-04-16 19:31:36 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/12.jpg
+2026-04-16 19:31:36 - compute_in_hand - WARNING: 未检测到棋盘格，跳过 eye_hand_data/data2026041602/12.jpg 及 poses.txt 第 12 行
+2026-04-16 19:31:36 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/13.jpg
+2026-04-16 19:31:36 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/14.jpg
+2026-04-16 19:31:36 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/15.jpg
+2026-04-16 19:31:36 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/16.jpg
+2026-04-16 19:31:36 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/17.jpg
+2026-04-16 19:31:36 - compute_in_hand - INFO: 棋盘格检测成功图片编号: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16, 17]
+2026-04-16 19:37:26 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/1.jpg
+2026-04-16 19:37:26 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/2.jpg
+2026-04-16 19:37:26 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/3.jpg
+2026-04-16 19:37:26 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/4.jpg
+2026-04-16 19:37:26 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/5.jpg
+2026-04-16 19:37:26 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/6.jpg
+2026-04-16 19:37:26 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/7.jpg
+2026-04-16 19:37:27 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/8.jpg
+2026-04-16 19:37:27 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/9.jpg
+2026-04-16 19:37:27 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/10.jpg
+2026-04-16 19:37:27 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/11.jpg
+2026-04-16 19:37:27 - compute_in_hand - WARNING: 未检测到棋盘格，跳过 eye_hand_data/data2026041602/11.jpg 及 poses.txt 第 11 行
+2026-04-16 19:37:27 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/12.jpg
+2026-04-16 19:37:27 - compute_in_hand - WARNING: 未检测到棋盘格，跳过 eye_hand_data/data2026041602/12.jpg 及 poses.txt 第 12 行
+2026-04-16 19:37:27 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/13.jpg
+2026-04-16 19:37:27 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/14.jpg
+2026-04-16 19:37:27 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/15.jpg
+2026-04-16 19:37:27 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/16.jpg
+2026-04-16 19:37:27 - compute_in_hand - INFO: 读 eye_hand_data/data2026041602/17.jpg
+2026-04-16 19:37:27 - compute_in_hand - INFO: 棋盘格检测成功图片编号: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 15, 16, 17]

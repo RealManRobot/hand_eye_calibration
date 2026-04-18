@@ -53,9 +53,15 @@ def func():
     obj_points = []     # 存储3D点
     img_points = []     # 存储2D点
 
-    images_num = [f for f in os.listdir(images_path) if f.endswith('.jpg')]
+    images_num = [
+        f for f in os.listdir(images_path)
+        if f.endswith('.jpg') and os.path.splitext(f)[0].isdigit()
+    ]
+    image_ids = sorted(int(os.path.splitext(f)[0]) for f in images_num)
+    valid_image_ids = []
+    size = None
 
-    for i in range(1, len(images_num) + 1):   #标定好的图片在images_path路径下，从0.jpg到x.jpg
+    for i in image_ids:   # 图片编号 i 对应 poses.txt 第 i 行
 
         image_file = os.path.join(images_path,f"{i}.jpg")
 
@@ -72,14 +78,19 @@ def func():
             if ret:
 
                 obj_points.append(objp)
+                valid_image_ids.append(i)
 
                 corners2 = cv2.cornerSubPix(gray, corners, (5, 5), (-1, -1), criteria)  # 在原角点的基础上寻找亚像素角点
-                if [corners2]:
-                    img_points.append(corners2)
-                else:
-                    img_points.append(corners)
+                img_points.append(corners2)
+            else:
+                logger_.warning(f'未检测到棋盘格，跳过 {image_file} 及 poses.txt 第 {i} 行')
 
-    N = len(img_points)
+    if not img_points:
+        raise RuntimeError(f'没有在 {images_path} 中检测到可用棋盘格图片')
+    if len(img_points) < 3:
+        raise RuntimeError(f'只检测到 {len(img_points)} 张可用棋盘格图片，至少需要 3 张')
+
+    logger_.info(f'棋盘格检测成功图片编号: {valid_image_ids}')
 
     # 标定,得到图案在相机坐标系下的位姿
     ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(obj_points, img_points, size, None, None)
@@ -98,10 +109,14 @@ def func():
     R_tool = []
     t_tool = []
 
-    for i in range(int(N)):
+    max_pose_count = tool_pose.shape[1] // 4
+    for image_id in valid_image_ids:
+        pose_index = image_id - 1
+        if pose_index >= max_pose_count:
+            raise IndexError(f'{image_id}.jpg 对应 poses.txt 第 {image_id} 行，但只找到 {max_pose_count} 行位姿')
 
-        R_tool.append(tool_pose[0:3,4*i:4*i+3])
-        t_tool.append(tool_pose[0:3,4*i+3])
+        R_tool.append(tool_pose[0:3, 4*pose_index:4*pose_index+3])
+        t_tool.append(tool_pose[0:3, 4*pose_index+3])
 
     R, t = cv2.calibrateHandEye(R_tool, t_tool, rvecs, tvecs, cv2.CALIB_HAND_EYE_TSAI)
 
@@ -122,4 +137,3 @@ if __name__ == '__main__':
     logger_.info(f"平移向量是:\n {            translation_vector}")
 
     logger_.info(f"四元数是：\n {             quaternion}")
-
