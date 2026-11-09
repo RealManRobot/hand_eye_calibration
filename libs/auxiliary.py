@@ -3,8 +3,6 @@ import platform
 import subprocess
 import os
 from datetime import datetime
-import tkinter as tk
-from tkinter import messagebox
 import re
 
 from libs.log_setting import CommonLog
@@ -63,7 +61,7 @@ def create_folder_with_date():
     # 获取当前日期，格式为YYYYMMDD
     today = datetime.now().strftime('%Y%m%d')
 
-    prefix_files = "eye_hand_data"
+    prefix_files = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "eye_hand_data")
 
 
     # 构建基础文件夹名称
@@ -86,6 +84,8 @@ def create_folder_with_date():
     return folder_path
 
 def popup_message(title, message):
+    import tkinter as tk
+    from tkinter import messagebox
 
     # 创建一个新的Tk窗口实例
     root = tk.Tk()
@@ -113,10 +113,8 @@ def find_latest_data_folder(path):
     if not folders:
         return None
 
-    print(folders)
-
     # 使用自定义排序规则：先按日期排序，如果日期相同，则按随后的数字排序（如果存在）
-    folders.sort(key=lambda x: (pattern.match(x).group(1), pattern.match(x).group(2)), reverse=True)
+    folders.sort(key=lambda x: (pattern.match(x).group(1), int(pattern.match(x).group(2) or 0)), reverse=True)
 
     # 返回第一个元素，即日期最大且数字最大（如果有）的文件夹名称
     return folders[0]

@@ -50,9 +50,9 @@ $$ {}^{base}_{end}M $$
 
 $$ {}^{end}_{camera}M $$
   
-- C：相机在标定板坐标系下的位姿，这个其实就是求解相机的外参（由相机标定求出）。
-  
-$$ {}^{board}_{camera}M $$
+- C：标定板在相机坐标系下的位姿，由棋盘角点和相机内参通过 `solvePnP` 求得。
+
+$$ {}^{camera}_{board}M $$
 
 - D：标定板在机器人坐标系下的位姿。在标定过程中，只有机械臂末端在动，标定板和机械臂基座不动，这个位姿关系是固定不变的。
 
@@ -61,23 +61,23 @@ $$ {}^{base}_{board}M $$
 
 所以我们只要计算得到B变换，那么标定板在机械臂坐标系下的位姿D也就自然得到了:
 
-$$ {}^{base}{board}M = {}^{base}{end}M \cdot {}^{end}{camera}M \cdot {}^{camera}{board}M $$
+$$ {}^{base}_{board}M = {}^{base}_{end}M \cdot {}^{end}_{camera}M \cdot {}^{camera}_{board}M $$
 
 如图2所示，我们让机械臂运动两个位置，保证这两个位置下都可以看到标定板，然后构建空间变换回路：
 
 ![图2 机械臂运动到两个位置，构建变换回路](picture/29fb4d433468f12530eca3e2a563da72.png)
 
-$$ A_1 \cdot B \cdot C_1^{-1} = A_2 \cdot B \cdot C_2^{-1} $$
+$$ A_1 \cdot B \cdot C_1 = A_2 \cdot B \cdot C_2 $$
 
-$$ \left( A_2^{-1} \cdot A_1 \right) \cdot B = B \cdot \left( C_2^{-1} \cdot C_1 \right) $$
+$$ \left( A_2^{-1} \cdot A_1 \right) \cdot B = B \cdot \left( C_2 \cdot C_1^{-1} \right) $$
 
 等同于下面的公式：
 
 
 
-$$ {}^{base}{end}M_1 \cdot {}^{end}{camera}M_1 \cdot {}^{camera}{board}M_1 = {}^{base}{end}M_2 \cdot {}^{end}{camera}M_2 \cdot {}^{camera}{board}M_2 $$
+$$ {}^{base}_{end}M_1 \cdot {}^{end}_{camera}M_1 \cdot {}^{camera}_{board}M_1 = {}^{base}_{end}M_2 \cdot {}^{end}_{camera}M_2 \cdot {}^{camera}_{board}M_2 $$
 
-$$ \left( {}^{base}{end}M_2 \right)^{-1} \cdot {}^{base}{end}M_1 \cdot {}^{end}{camera}M_1 = {}^{end}{camera}M_2 \cdot {}^{camera}{board}M_2 \cdot \left( {}^{camera}{board}M_1 \right)^{-1} $$
+$$ \left( {}^{base}_{end}M_2 \right)^{-1} \cdot {}^{base}_{end}M_1 \cdot {}^{end}_{camera}M_1 = {}^{end}_{camera}M_2 \cdot {}^{camera}_{board}M_2 \cdot \left( {}^{camera}_{board}M_1 \right)^{-1} $$
 
 这是一个典型的**AX=XB**问题，而且根据定义，其中X是一个4X4齐次变换矩阵：
 
@@ -103,7 +103,7 @@ $$ {}^{base}_{camera}M $$
 
 每次采集图片和机械臂位姿，都存在下面等式：
 
-$$ {}^{end}{board}M = {}^{end}{base}M \cdot {}^{base}{camera}M \cdot {}^{camera}{board}M $$
+$$ {}^{end}_{board}M = {}^{end}_{base}M \cdot {}^{base}_{camera}M \cdot {}^{camera}_{board}M $$
 
 
 其中：
@@ -119,15 +119,13 @@ $$ {}^{end}{board}M = {}^{end}{base}M \cdot {}^{base}{camera}M \cdot {}^{camera}
 
 则可以得到如下等式：
 
-**The Cauchy-Schwarz Inequality**
+$$ {}^{end}_{base}M_1 \cdot {}^{base}_{camera}M_1 \cdot {}^{camera}_{board}M_1 = {}^{end}_{base}M_2 \cdot {}^{base}_{camera}M_2 \cdot {}^{camera}_{board}M_2 $$
 
-$$ {}^{end}{base}M_1 \cdot {}^{base}{camera}M_1 \cdot {}^{camera}{board}M_1 = {}^{end}{base}M_2 \cdot {}^{base}{camera}M_2 \cdot {}^{camera}{board}M_2 $$
-
-$$ {}^{end}{base}M_2^{-1} \cdot {}^{end}{base}M_1 \cdot {}^{base}{camera}M_1 = {}^{base}{camera}M_2 \cdot {}^{camera}{board}M_2 \cdot {}^{camera}{board}M_1^{-1} $$
+$$ {}^{end}_{base}M_2^{-1} \cdot {}^{end}_{base}M_1 \cdot {}^{base}_{camera}M_1 = {}^{base}_{camera}M_2 \cdot {}^{camera}_{board}M_2 \cdot {}^{camera}_{board}M_1^{-1} $$
 
 $$ \vdots $$
 
-$$ {}^{end}{base}M_n^{-1} \cdot {}^{end}{base}M_{n-1} \cdot {}^{base}{camera}M{n-1} = {}^{base}{camera}M_n \cdot {}^{camera}{board}M_n \cdot {}^{camera}{board}M{n-1}^{-1} $$
+$$ {}^{end}_{base}M_n^{-1} \cdot {}^{end}_{base}M_{n-1} \cdot {}^{base}_{camera}M_{n-1} = {}^{base}_{camera}M_n \cdot {}^{camera}_{board}M_n \cdot {}^{camera}_{board}M_{n-1}^{-1} $$
 
 
 
@@ -144,7 +142,7 @@ $$ X = \begin{bmatrix} R & t \\\ 0 & 1 \end{bmatrix} $$
 ### 代码结构
 
 ```
----eye_hand_data  眼在手上标定时采集的数据
+---eye_hand_data  各批次的采集数据和标定结果
 
 ---libs
 
@@ -152,7 +150,9 @@ $$ X = \begin{bmatrix} R & t \\\ 0 & 1 \end{bmatrix} $$
 
 ​         ---log_settings.py 日志包
 
----robotic_arm_package 机械臂python包
+​         ---calibration.py 两种标定方式共用的求解与质量检查
+
+---config.yaml 棋盘格参数和误差限值
 
 ---collect_data.py 手眼标定时采集数据程序
 
@@ -169,102 +169,41 @@ $$ X = \begin{bmatrix} R & t \\\ 0 & 1 \end{bmatrix} $$
 
 
 
-### compute_in_hand.py | compute_to_hand.py关键代码解释
+### 采集与计算
 
-#### 1.主函数`func()`
+在项目目录运行 `python collect_data.py`。启动采集时，脚本将控制器的工作坐标系切到 `Base`。标定期间保持同一工具坐标系。点击 `Capture_Video` 预览窗口，等机械臂停稳后按 `s`。脚本使用当前画面，再查询机械臂末端位姿。在预览窗口按 `q` 或 `Esc` 退出。预览放大两倍，保存的图像保持采集分辨率。
 
-**compute_in_hand.py | compute_to_hand.py**
+每批数据保存到程序目录的 `eye_hand_data` 下，包含按数字编号的图片、`poses.txt` 和 `camera.json`。图片按数字顺序与位姿逐行对应；请勿单独删除图片、删除位姿行或修改图片编号。通信失败或保存失败的样本不计数。
 
-```python
-def func():
-    
-    path = os.path.dirname(__file__)
+`camera.json` 保存当前彩色流分辨率、内参和畸变参数，计算时使用这些参数，通过 `solvePnP` 求标定板位姿。旧数据没有该文件时，仍使用 `calibrateCamera` 从本批图片估计内参，并显示提示。不要把其他相机或其他分辨率的内参复制到数据目录。
 
-    # 亚像素角点查找准则
-    criteria = (cv2.TERM_CRITERIA_MAX_ITER | cv2.TERM_CRITERIA_EPS, 30, 0.001)
+按安装方式选择求解脚本，并指定对应的采集目录。两种安装方式分别采集。省略目录时，脚本按目录名选择最新一批数据。
 
-    # 准备标定板的3D点坐标
-    objp = np.zeros((XX * YY, 3), np.float32)
-    objp[:, :2] = np.mgrid[0:XX, 0:YY].T.reshape(-1, 2)
-    objp = L * objp
+| 安装方式 | 运行命令 | 输出 |
+| --- | --- | --- |
+| 眼在手上 | `python compute_in_hand.py "eye_hand_data/<眼在手上批次目录>"` | `result_in_hand.json`，相机到末端 |
+| 眼在手外 | `python compute_to_hand.py "eye_hand_data/<眼在手外批次目录>"` | `result_to_hand.json`，相机到基座 |
 
-    obj_points = []     # 存储3D点
-    img_points = []     # 存储2D点
+求解使用当前 `config.yaml`。复算旧批次前核对该批棋盘参数，重复求解会覆盖该批目录里的同名结果。
 
-    images_num = [f for f in os.listdir(images_path) if f.endswith('.jpg')]
+程序按实际文件名读取图片。检测角点或图片质量检查失败时，同步剔除对应的机械臂位姿。至少需要6组有效配对，建议采集15～20组，并包含绕不同轴的充分旋转。
 
-    for i in range(1, len(images_num) + 1):
-        image_file = os.path.join(images_path, f"{i}.jpg")
+计算逻辑共用 `libs/calibration.py`。眼在手上使用末端到基座的位姿，眼在手外使用它的逆变换。`poses.txt` 每行记录 `x,y,z,rx,ry,rz`，单位为米和弧度。这里的末端指采集位姿使用的当前工具坐标系。
 
-        if os.path.exists(image_file):
-            logger_.info(f'读 {image_file}')
+结果保存在本批数据的 `result_in_hand.json` 或 `result_to_hand.json`，记录矩阵、变换方向、单位、有效图片编号、被剔除图片及原因、重投影误差和固定关系误差。四元数顺序为 `[x,y,z,w]`，平移单位为米。
 
-            img = cv2.imread(image_file)
-            gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+计算结束后，终端同时显示位置残差（毫米）、姿态残差（度）和重投影误差（像素）的RMS、最大值及对应限值；残差汇总也保存在结果文件的 `quality` 字段。超限时同样输出这些数值，结果仍标记为 `rejected`。
 
-            size = gray.shape[::-1]
-            ret, corners = cv2.findChessboardCorners(gray, (XX, YY), None)
+当前 `config.yaml` 对单张图像使用 **2 px** 的重投影 RMS 限值，超限图像和对应的位姿会一并剔除。固定关系最大位置残差的限值是 **12 mm**，最大姿态残差的限值是 **3°**。后两项任一超限时，结果标记为 `rejected`。求解提前失败时标记为 `failed`，通过检查时标记为 `candidate`。（注：限值仅仅代表计算出来的残差过大，不建议使用，原因有：旋转角度不足、保存的姿态难以满足精准计算的要求、臂的精度和状态等等）
 
-            if ret:
-                obj_points.append(objp)
-                corners2 = cv2.cornerSubPix(gray, corners, (5, 5), (-1, -1), criteria)
-                if [corners2]:
-                    img_points.append(corners2)
-                else:
-                    img_points.append(corners)
+相机固定内参路径支持 OpenCV Brown 畸变参数及无畸变图像；其他 RealSense 非零畸变模型会明确拒绝，不能将其系数直接当作 Brown 参数使用。
 
-```
-
-
-
-上面代码遍历采集的标定板图像，逐一获取棋盘格角点并放到数组中去
-
-#### 2.相机标定
-
-**compute_in_hand.py | compute_to_hand.py**
+#### 手眼标定计算
 
 ```python
-
-
-# 标定，得到图案在相机坐标系下的位姿
-ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(obj_points, img_points, size, None, None)
-
-```
-
-
-
-- 使用OpenCV的 `calibrateCamera` 函数进行相机标定，计算相机的内参数和畸变系数。
-
-- `rvecs` 和 `tvecs` 分别是每张图像的旋转向量和平移向量，表示**标定板在相机坐标系下的位姿**。
-
-  
-
-#### 3.处理机械臂位姿数据
-
-**compute_in_hand.py**
-
-```python
-poses_main(file_path)
-```
-
-将机械臂末端位姿数据转化为**机械臂末端坐标系**相对于**基坐标系**的旋转矩阵和平移向量
-
-**compute_to_hand.py**
-
-```python
-poses2_main(file_path)
-```
-
-将机械臂末端位姿数据转化为**基坐标系**相对于**机械臂末端坐标系**的旋转矩阵和平移向量
-
-
-
-####  4.手眼标定计算
-
-```python
-R, t = cv2.calibrateHandEye(R_tool, t_tool, rvecs, tvecs, cv2.CALIB_HAND_EYE_TSAI)
-
-return R,t
+R, t = cv2.calibrateHandEye(
+    R_tool, t_tool, rvecs, tvecs, method=cv2.CALIB_HAND_EYE_TSAI
+)
 
 ```
 
@@ -332,7 +271,7 @@ def euler_angles_to_rotation_matrix(rx, ry, rz):
 ```
 
 - 定义了将欧拉角（绕X、Y、Z轴的旋转）转换为旋转矩阵的函数。
-- 按照Z-Y-X的顺序进行旋转，并将各轴的旋转矩阵相乘得到最终的旋转矩阵 `R`。
+- 欧拉角以弧度表示。旋转矩阵为 `Rz @ Ry @ Rx`，作用于列向量时从右到左应用。
 
 #### 2. **将位姿转换为齐次变换矩阵**
 
@@ -354,62 +293,36 @@ def pose_to_homogeneous_matrix(pose):
 - 位置 `(x, y, z)` 作为平移向量，姿态 `(rx, ry, rz)` 作为旋转欧拉角。
 - 生成的齐次变换矩阵 `H` 将用于描述**机械臂末端相对于基座的旋转变换**。
 
-#### 3. **保存多个矩阵到CSV文件**
-
-```python
-Copy codedef save_matrices_to_csv(matrices, file_name):
-    rows, cols = matrices[0].shape
-    num_matrices = len(matrices)
-    combined_matrix = np.zeros((rows, cols * num_matrices))
-
-    for i, matrix in enumerate(matrices):
-        combined_matrix[:, i * cols: (i + 1) * cols] = matrix
-
-    with open(file_name, 'w', newline='') as csvfile:
-        csv_writer = csv.writer(csvfile)
-        for row in combined_matrix:
-            csv_writer.writerow(row)
-```
-
-- 将多个矩阵横向拼接成一个大矩阵，然后保存到CSV文件中。
-
-- 每个矩阵占用固定的列数，这样在读取时可以按照固定的间隔切分出单个矩阵。
-
-  
+求解脚本直接从 `poses.txt` 读取位姿，并将标定矩阵写入结果 JSON。
 
 ## 标定过程
 
 ### 1.环境要求
 
-#### 基础环境准备
+#### Python 环境准备
 
-| 项目     | 版本           |
-| :------- | :------------- |
-| 操作系统 | ubuntu/windows |
-| Python   | 3.9及以上      |
-|          |                |
+推荐使用 **Python 3.11**。当前锁定的 RealSense Python 包提供 Linux 和 Windows x86-64 的 Python 3.11 安装包。依赖版本见 [requirements.txt](requirements.txt)。[RealSense 发布文件](https://pypi.org/project/pyrealsense2/2.55.1.6486/#files)
 
-#### Python环境准备
+Ubuntu
 
-| 包            | 版本        |
-| :------------ | :---------- |
-| numpy         | 2.0.2       |
-| opencv-python | 4.10.0.84   |
-| pyrealsense2  | 2.55.1.6486 |
-| scipy         | 1.13.1      |
-
-执行下面命令在python环境中安装手眼标定程序所需要的包：
-
-```cmd
-pip install -r requirements.txt
+```bash
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
 ```
 
+Windows PowerShell
 
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+```
 
 #### 设备准备
 
 - 机械臂：RM75 RM65  RM63 GEN72 
-- 相机: Intel RealSense Depth Camera D435
+- 相机：Intel RealSense D435，采集脚本请求 `640 × 480 @ 30 FPS` 的彩色流
 
 - 摄像头专用数据线
 
@@ -418,9 +331,10 @@ pip install -r requirements.txt
 - 标定板（1或2）
 
   1. 打印纸质标定板
-
+     ![标定版图片__00(A)](picture/ba734972b343537d8d040a1c85d07d3e.png)  
+A4纸打印L约27.72mm（计算时以实际长度为准）
      ![标定板图片_00(1)](picture/标定板图片_00(1).png)
-
+A4纸打印L约20. 21mm（计算时以实际长度为准）
   2. 淘宝上搜索“标定板棋盘格”购买
 
 
@@ -433,23 +347,17 @@ pip install -r requirements.txt
 
 #### 参数配置
 
-在配置文件（config.yaml）中设置标定板参数
+在 [config.yaml](config.yaml) 的 `checkerboard_args` 中填写实际棋盘参数。
 
-![image-20250403064543828](picture/image-20250403064543828.png)
+| 参数 | 含义 | 当前配置 |
+| --- | --- | --- |
+| `XX` | 横向内角点数，比横向方格数少一 | 8 |
+| `YY` | 纵向内角点数，比纵向方格数少一 | 5 |
+| `L` | 单格实测边长，单位为米 | 0.02772 |
 
-​		
+打印后测量连续多格的总长，再除以格数。打印缩放会改变实际格长。
 
-config.yaml里的配置参数如下，有下面三个
-
-​        xx:标定板的横向角点数（长边格子数减1），默认为11，例如下图长边12个格子，角点数为11
-
-​		YY:标定板纵向角点数（短边格子数减1），默认为8，例如下图短边9个格子，角点数为8
-
-​		L :  标定板单个方格的实际尺寸（单位：米），默认是0.03
-
-​        ![](picture/image-20241016181226851.png)
-
-
+![棋盘格内角点计数示意](picture/image-20241016181226851.png)
 
 #### 眼在手上
 
@@ -463,7 +371,7 @@ config.yaml里的配置参数如下，有下面三个
 
 ![image-20241018143659263](picture/image-20241018143659263.png)
 
-​			如果机械臂的IP为192.168.10.18，则将电脑的IP设置为10网段（参照上面设置）                                     
+如果机械臂 IP 为 `192.168.10.18`，将电脑设到对应网段。脚本依次探测 `192.168.1.18` 和 `192.168.10.18`，连接第一个可达地址的 TCP `8080` 端口。
 
 (3).标定板放置在平面上，相机固定在机械臂末端，相机对准标定板
 
@@ -471,7 +379,7 @@ config.yaml里的配置参数如下，有下面三个
 
 (4).运行脚本`collect_data.py`，出现一个弹窗
 
-(5).拖动机械臂末端，使呈现相机视野下的标定板清晰、完整、将光标放在弹窗上
+(5). 调整机械臂末端姿态，让相机拍到清晰、完整的棋盘。
 
 ​		**注意：**
 
@@ -484,7 +392,7 @@ config.yaml里的配置参数如下，有下面三个
 
 ​				
 
-(6).点击键盘“s”采集数据
+(6). 点击预览窗口，等机械臂停稳后按 `s` 采集。
 
 (7)移动15-20次机械臂，重复步骤(5)(6)，采集不同机械臂姿态下的标定板图片15-20张左右
 
@@ -500,7 +408,7 @@ config.yaml里的配置参数如下，有下面三个
 
 ##### 计算标定结果
 
-​		运行脚本`compute_in_hand.py`，获取标定结果
+选择眼在手上的采集目录，运行 `compute_in_hand.py`。
 
 ​        得出**相机坐标系**相对于**机械臂末端**坐标系的**旋转矩阵**和**平移向量**
 
@@ -522,13 +430,13 @@ config.yaml里的配置参数如下，有下面三个
 
 (4).运行脚本`collect_data.py`，出现一个弹窗
 
-(5).拖动机械臂末端，使呈现相机视野下的标定板清晰、完整、将光标放在弹窗上
+(5). 调整机械臂末端姿态，让相机拍到清晰、完整的棋盘。
 
 ​		**注意：**
 
 ​				使出现在相机视野里的标定板和相机镜面呈现一定角度。
 
-(6).点击键盘“s”采集数据
+(6). 点击预览窗口，等机械臂停稳后按 `s` 采集。
 
 (7)移动15-20次机械臂，重复步骤(5)(6)，采集不同机械臂姿态下的标定板图片15-20张左右
 
@@ -540,7 +448,7 @@ config.yaml里的配置参数如下，有下面三个
 
 ##### 计算标定结果
 
-运行脚本`compute_to_hand.py`，获取标定结果
+选择眼在手外的采集目录，运行 `compute_to_hand.py`。
 
 得出**相机坐标系**相对于**机械臂基坐标系**的**旋转矩阵**和**平移向量**
 
@@ -552,7 +460,7 @@ config.yaml里的配置参数如下，有下面三个
 
 #### 误差范围
 
-受采集到的图片的质量影响，标定结果中的平移向量与实际的差距在1cm之内。
+`candidate` 表示通过同一批样本的一致性检查。实际定位精度需用工作区内的独立实测点验证，测点应覆盖实际使用的距离和姿态。
 
 ## 标定过程中可能出现的问题
 
@@ -562,13 +470,13 @@ config.yaml里的配置参数如下，有下面三个
 
 即执行下面脚本时：
 
-```cmd
+```bash
 python compute_in_hand.py
 ```
 
 或
 
-```python
+```bash
 python compute_to_hand.py
 ```
 
@@ -598,14 +506,32 @@ python compute_to_hand.py
 
 3. **增加数据采集次数：**
 
-- 采集更多的样本数据，一般来说，至少需要10组以上不同的姿态数据。
+- 求解至少需要 6 组通过检查的样本，建议采集 15～20 组不同姿态，留出剔除余量。
 - 更多的数据能提高标定的稳定性和准确性。
 
 ## 手眼标定结果如何使用
 
+下文用 `T_目标_来源` 表示从来源坐标系到目标坐标系的变换。三维点和物体位姿都应位于标定所用的相机光学坐标系，长度单位为米。像素坐标需要结合深度和相机内参转换为三维点。
+
+先加载与安装方式匹配的结果 JSON。通过独立测点验证后，再将矩阵用于实际定位。
+
+```python
+import json
+from pathlib import Path
+
+import numpy as np
+
+from save_poses import pose_to_homogeneous_matrix
 
 
-机械臂如何捡取物品？
+def load_calibration(result_path, direction):
+    result = json.loads(Path(result_path).read_text(encoding="utf-8"))
+    if result["status"] != "candidate":
+        raise ValueError("请选择通过质量检查的结果")
+    if result["direction"] != direction:
+        raise ValueError(f"标定方向应为 {direction}")
+    return np.asarray(result["matrix"], dtype=float)
+```
 
 ### 眼在手上
 
@@ -669,174 +595,42 @@ $$ H^{ROB}{OBJ} = H^{ROB}{EE} \cdot H^{EE} {CAM} \cdot H^{CAM} {OBJ} $$
 $$ \begin{bmatrix} R_o^r & t_o^r \\\ 0 & 1 \end{bmatrix} = \begin{bmatrix} R_e^r & t_e^r \\\ 0 & 1 \end{bmatrix} \cdot \begin{bmatrix} R_c^e & t_c^e \\\ 0 & 1 \end{bmatrix} \cdot \begin{bmatrix} R_o^c & t_o^c \\\ 0 & 1 \end{bmatrix} $$
 
 
-​	由此产生的位姿是机械臂当前工具坐标系圆心应该达到的位姿进行捡取。(标定时采集的机械臂位姿也是当前工具坐标系相对于机械臂基坐标系位姿)
+上式给出物体在基座下的位姿 `T_base_object`。如果用它生成抓取目标，还要右乘抓取时 TCP 相对于物体的变换 `T_object_tcp`，其中包含夹爪朝向和抓取偏移。
+
+```text
+T_base_tcp = T_base_object @ T_object_tcp
+```
+
+两种安装方式都使用同样的抓取变换。
 
 
 
 #### 代码
 
+使用与图像对应时刻的末端位姿 `end_pose = [x, y, z, rx, ry, rz]`，位置为米、姿态为弧度，工作坐标系为 `Base`。使用标定时的同一工具坐标系。
 
+```python
+def wrist_camera_to_base(result_path, end_pose):
+    T_end_camera = load_calibration(result_path, "camera_to_end")
+    T_base_end = pose_to_homogeneous_matrix(end_pose)
+    return T_base_end @ T_end_camera
+```
 
-- 物体在相机坐标系是一个3D点（x,y,z)
-
-  ```python
-  
-  import numpy as np
-  from scipy.spatial.transform import Rotation as R
-  
-  
-  # 相机坐标系到机械臂末端坐标系的旋转矩阵和平移向量（手眼标定得到）
-  rotation_matrix = np.array([[-0.00235395 , 0.99988123 ,-0.01523124],
-                              [-0.99998543, -0.00227965, 0.0048937],
-                              [0.00485839, 0.01524254, 0.99987202]])
-  translation_vector = np.array([-0.09321419, 0.03625434, 0.02420657])
-  
-  
-  def convert(x ,y ,z ,x1 ,y1 ,z1 ,rx ,ry ,rz):
-      """
-      我们需要将手眼标定得到旋转向量和平移向量转换为齐次变换矩阵，然后使用深度相机识别到的物体坐标（x, y, z）和
-      机械臂末端的位姿（x1,y1,z1,rx,ry,rz）来计算物体相对于机械臂基座的位姿（x, y, z）
-  
-      """
-  
-  
-  
-      # 深度相机识别物体返回的坐标
-      obj_camera_coordinates = np.array([x, y, z])
-  
-      # 机械臂末端的位姿，单位为弧度
-      end_effector_pose = np.array([x1, y1, z1,
-                                    rx, ry, rz])
-  
-      # 将旋转矩阵和平移向量转换为齐次变换矩阵
-      T_camera_to_end_effector = np.eye(4)
-      T_camera_to_end_effector[:3, :3] = rotation_matrix
-      T_camera_to_end_effector[:3, 3] = translation_vector
-  
-      # 机械臂末端的位姿转换为齐次变换矩阵
-      position = end_effector_pose[:3]
-      orientation = R.from_euler('xyz', end_effector_pose[3:], degrees=False).as_matrix()
-  
-      T_base_to_end_effector = np.eye(4)
-      T_base_to_end_effector[:3, :3] = orientation
-      T_base_to_end_effector[:3, 3] = position
-  
-      # 计算物体相对于机械臂基座的位姿
-      obj_camera_coordinates_homo = np.append(obj_camera_coordinates, [1])  # 将物体坐标转换为齐次坐标
-  
-      obj_end_effector_coordinates_homo = T_camera_to_end_effector.dot(obj_camera_coordinates_homo)
-  
-      obj_base_coordinates_homo = T_base_to_end_effector.dot(obj_end_effector_coordinates_homo)
-  
-      obj_base_coordinates = list(obj_base_coordinates_homo[:3])  # 从齐次坐标中提取物体的x, y, z坐标
-  
-  
-      return obj_base_coordinates
-  
-  
-  ```
-
-  
-
-- 物体在相机坐标系是一个位姿
+- **物体是一个三维点**。在相机点的末尾补 `1`，使矩阵同时应用旋转和平移。
 
   ```python
-  
-  import numpy as np
-  from scipy.spatial.transform import Rotation as R
-  
-  
-  # 相机坐标系到机械臂末端坐标系的旋转矩阵和平移向量（手眼标定得到）
-  rotation_matrix = np.array([[-0.00235395 , 0.99988123 ,-0.01523124],
-                              [-0.99998543, -0.00227965, 0.0048937],
-                              [0.00485839, 0.01524254, 0.99987202]])
-  translation_vector = np.array([-0.09321419, 0.03625434, 0.02420657])
-  
-  
-  def decompose_transform(matrix):
-      """
-      将矩阵转化为位姿
-      """
-  
-      translation = matrix[:3, 3]
-      rotation = matrix[:3, :3]
-  
-      # Convert rotation matrix to euler angles (rx, ry, rz)
-      sy = np.sqrt(rotation[0, 0] * rotation[0, 0] + rotation[1, 0] * rotation[1, 0])
-      singular = sy < 1e-6
-  
-      if not singular:
-          rx = np.arctan2(rotation[2, 1], rotation[2, 2])
-          ry = np.arctan2(-rotation[2, 0], sy)
-          rz = np.arctan2(rotation[1, 0], rotation[0, 0])
-      else:
-          rx = np.arctan2(-rotation[1, 2], rotation[1, 1])
-          ry = np.arctan2(-rotation[2, 0], sy)
-          rz = 0
-  
-      return translation, rx, ry, rz
-  
-  
-  def convert(x,y,z,rx,ry,rz,x1,y1,z1,rx1,ry1,rz1):
-  
-      """
-  
-      我们需要将标定得到的旋转向量和平移向量转换为齐次变换矩阵，然后使用机械臂末端的位姿(x, y, z,rx,ry,rz）和
-     深度相机识别到的物体坐标（x1,y1,z1,rx1,ry1,rz1）来计算物体相对于机械臂基座的位姿
-  
-      """
-  
-  
-  
-      # 深度相机识别物体返回的坐标
-      obj_camera_coordinates = np.array([x1, y1, z1,rx1,ry1,rz1])
-  
-      # 机械臂末端的位姿，单位为弧度
-      end_effector_pose = np.array([x, y, z,
-                                    rx, ry, rz])
-  
-      # 将旋转矩阵和平移向量转换为齐次变换矩阵
-      T_camera_to_end_effector = np.eye(4)
-      T_camera_to_end_effector[:3, :3] = rotation_matrix
-      T_camera_to_end_effector[:3, 3] = translation_vector
-  
-      # 机械臂末端的位姿转换为齐次变换矩阵
-      position = end_effector_pose[:3]
-      orientation = R.from_euler('xyz', end_effector_pose[3:], degrees=False).as_matrix()
-  
-      T_end_to_base_effector = np.eye(4)
-      T_end_to_base_effector[:3, :3] = orientation
-      T_end_to_base_effector[:3, 3] = position
-  
-      # 计算物体相对于机械臂基座的位姿
-  
-  
-      # 物体相对于相机的位姿转换为齐次变换矩阵
-      position2 = obj_camera_coordinates[:3]
-      orientation2 = R.from_euler('xyz', obj_camera_coordinates[3:], degrees=False).as_matrix()
-  
-      T_object_to_camera_effector = np.eye(4)
-      T_object_to_camera_effector[:3, :3] = orientation2
-      T_object_to_camera_effector[:3, 3] = position2
-  
-  
-      obj_end_effector_coordinates_homo = T_camera_to_end_effector.dot(T_object_to_camera_effector)
-  
-      obj_base_effector = T_end_to_base_effector.dot(obj_end_effector_coordinates_homo)
-  
-      result = decompose_transform(obj_base_effector)
-  
-  
-  
-      return result
-  
-  
-  
+  def wrist_point_to_base(result_path, end_pose, camera_point):
+      T_base_camera = wrist_camera_to_base(result_path, end_pose)
+      return (T_base_camera @ np.append(camera_point, 1.0))[:3]
   ```
-  
-  
 
-​		   代码中rotation_matrix和translation_vector变量分别是眼在手上**手眼标定**得到的**旋转矩阵**和**平移向量**
+- **物体有完整位姿**。传入物体到相机的 4 × 4 变换，返回物体到基座的变换。
+
+  ```python
+  def wrist_object_to_base(result_path, end_pose, T_camera_object):
+      T_base_camera = wrist_camera_to_base(result_path, end_pose)
+      return T_base_camera @ T_camera_object
+  ```
 
 ### 眼在手外
 
@@ -866,135 +660,32 @@ $$ \begin{bmatrix} R_o^r & t_o^r \\\ 0 & 1 \end{bmatrix} = \begin{bmatrix} R_c^r
 
 #### 代码
 
-- 物体在相机坐标系是一个3D点（x,y,z)
+固定相机直接使用 `result_to_hand.json` 中的相机到基座变换。相机和机械臂基座的相对位置保持固定。
+
+- **物体是一个三维点**。
 
   ```python
-  
-  import numpy as np
-  
-  
-  
-  # 相机坐标系到机械臂基坐标系的旋转矩阵和平移向量(手眼标定得到)
-  rotation_matrix = np.array([[-0.00235395 , 0.99988123 ,-0.01523124],
-                              [-0.99998543, -0.00227965, 0.0048937],
-                              [0.00485839, 0.01524254, 0.99987202]])
-  translation_vector = np.array([-0.09321419, 0.03625434, 0.02420657])
-  
-  def convert(x ,y ,z):
-      """
-      我们需要将旋转向量和平移向量转换为齐次变换矩阵，然后使用深度相机识别到的物体坐标（x, y, z）和
-      标定好的 相机到基座的 齐次变换矩阵 来计算物体相对于机械臂基座的位姿（x, y, z）
-  
-      """
-  
-  
-  
-      # 深度相机识别物体返回的坐标
-      obj_camera_coordinates = np.array([x, y, z])
-  
-  
-      # 将旋转矩阵和平移向量转换为齐次变换矩阵
-      T_camera_to_base_effector = np.eye(4)
-      T_camera_to_base_effector[:3, :3] = rotation_matrix
-      T_camera_to_base_effector[:3, 3] = translation_vector
-  
-  
-  
-      # 计算物体相对于机械臂基座的位姿
-      obj_camera_coordinates_homo = np.append(obj_camera_coordinates, [1])  # 将物体坐标转换为齐次坐标
-  
-      obj_base_effector_coordinates_homo = T_camera_to_base_effector.dot(obj_camera_coordinates_homo)
-      obj_base_coordinates = obj_base_effector_coordinates_homo[:3]  # 从齐次坐标中提取物体的x, y, z坐标
-  
-  
-      # 组合结果
-  
-      return list(obj_base_coordinates)
-  
-  
-  
+  def fixed_point_to_base(result_path, camera_point):
+      T_base_camera = load_calibration(result_path, "camera_to_base")
+      return (T_base_camera @ np.append(camera_point, 1.0))[:3]
   ```
 
-  
-
-- 物体在相机坐标系是一个位姿
+- **物体有完整位姿**。
 
   ```python
-  
-  import numpy as np
-  from scipy.spatial.transform import Rotation as R
-  
-  
-  # 相机坐标系到机械臂基坐标系的旋转矩阵和平移向量（手眼标定得到）
-  rotation_matrix = np.array([[-0.00235395 , 0.99988123 ,-0.01523124],
-                              [-0.99998543, -0.00227965, 0.0048937],
-                              [0.00485839, 0.01524254, 0.99987202]])
-  translation_vector = np.array([-0.09321419, 0.03625434, 0.02420657])
-  
-  def decompose_transform(matrix):
-      """
-      将矩阵转化为位姿
-      """
-  
-      translation = matrix[:3, 3]
-      rotation = matrix[:3, :3]
-  
-      # Convert rotation matrix to euler angles (rx, ry, rz)
-      sy = np.sqrt(rotation[0, 0] * rotation[0, 0] + rotation[1, 0] * rotation[1, 0])
-      singular = sy < 1e-6
-  
-      if not singular:
-          rx = np.arctan2(rotation[2, 1], rotation[2, 2])
-          ry = np.arctan2(-rotation[2, 0], sy)
-          rz = np.arctan2(rotation[1, 0], rotation[0, 0])
-      else:
-          rx = np.arctan2(-rotation[1, 2], rotation[1, 1])
-          ry = np.arctan2(-rotation[2, 0], sy)
-          rz = 0
-  
-      return translation, rx, ry, rz
-  
-  
-  
-  def convert(x ,y ,z,rx,ry,rz):
-      """
-      我们需要将旋转向量和平移向量转换为齐次变换矩阵，然后使用深度相机识别到的物体位姿（x, y, z,rx,ry,rz）和
-      标定好的 相机到基座的 齐次变换矩阵 来计算物体相对于机械臂基座的位姿（x, y, z,rx,ry,rz）
-  
-      """
-  
-  
-  
-      # 深度相机识别物体返回的坐标
-      obj_camera_coordinates = np.array([x, y, z,rx,ry,rz])
-  
-  
-      # 将旋转矩阵和平移向量转换为齐次变换矩阵
-      T_camera_to_base_effector = np.eye(4)
-      T_camera_to_base_effector[:3, :3] = rotation_matrix
-      T_camera_to_base_effector[:3, 3] = translation_vector
-  
-  
-  
-      # 计算物体相对于机械臂基座的位姿
-      # 物体相对于相机的位姿转换为齐次变换矩阵
-      position2 = obj_camera_coordinates[:3]
-      orientation2 = R.from_euler('xyz', obj_camera_coordinates[3:], degrees=False).as_matrix()
-  
-      T_object_to_camera_effector = np.eye(4)
-      T_object_to_camera_effector[:3, :3] = orientation2
-      T_object_to_camera_effector[:3, 3] = position2
-  
-      obj_base_effector = T_camera_to_base_effector.dot(T_object_to_camera_effector)
-  
-  	result = decompose_transform(obj_base_effector)
-  
-      # 组合结果
-  
-      return result
-  
+  def fixed_object_to_base(result_path, T_camera_object):
+      T_base_camera = load_calibration(result_path, "camera_to_base")
+      return T_base_camera @ T_camera_object
   ```
 
-​		代码中rotation_matrix和translation_vector变量分别是眼在手外**手眼标定**得到的**旋转矩阵**和**平移向量**
+如果下游接口需要与 `poses.txt` 同格式的六维位姿，可以把矩阵拆为平移和欧拉角。这里的 `xyz` 欧拉角与 `save_poses.py` 中的 `Rz @ Ry @ Rx` 对应。
 
-### 
+```python
+from scipy.spatial.transform import Rotation
+
+
+def matrix_to_pose(transform):
+    xyz = transform[:3, 3]
+    rpy = Rotation.from_matrix(transform[:3, :3]).as_euler("xyz")
+    return np.concatenate((xyz, rpy))
+```
